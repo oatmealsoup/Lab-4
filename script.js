@@ -1,8 +1,10 @@
-let num1 = 1;
-let num2 = 2;
-let name = 'you';
+let num1 = 507;
+let num2 = 312;
 
 function changeValue(operation) {
+	
+
+let name = 'you';
 	
   if (document.getElementById('name').value !== name && document.getElementById('name').value !== ''){
   name = document.getElementById('name').value;
@@ -18,41 +20,56 @@ function changeValue(operation) {
 
   console.log(`Hello, ${name}!`);
 
-  const calculator = createCalculator();
+abstraction();
+let operations = abstraction();
 
   let result;
   switch (operation) {
     case 'add':
-      result = calculator.add(num1, num2);
+      result = operations.add(num1, num2, operations.additiveIdentity);
       break;
+	  
     case 'subtract':
-      result = calculator.subtract(num1, num2);
+      result = operations.subtract(num1, num2, operations.additiveIdentity);
       break;
-    case 'multiply':   
-
-      result = calculator.multiply(num1, num2);
+	  
+    case 'multiply': 
+      result = operations.multiply(num1, num2, operations.multiplicativeIdentity);
       break;
+	  
     case 'divide':
-      result = calculator.divide(num1, num2);
+      result = operations.divide(num1, num2, operations.multiplicativeIdentity);
       break;   
 
     case 'modulo':
-      result = calculator.modulo(num1, num2);
+      result = operations.modulo(num1, num2)
       break;
-    default:
-      result = 'Invalid operation';
+	  
+	case 'three':
+	  result = operations.three(num1, num2, operations.additiveIdentity);
+	  break;
+	  
+	default:
+	  result = 'Invalid operation';
   }
 
-  const resultElement = document.getElementById('result');
-  resultElement.textContent = `Result: ${result}`;
+   const resultElement = document.getElementById('result');
+   resultElement.textContent = `Result: ${result}`;
 }
 
-function createCalculator() {
-  return {
-    add: (a, b) => a + b,
-    subtract: (a, b) => a - b,
-    multiply: (a, b) => a * b,
-    divide: (a, b) => b !== 0 ? a / b : "Division by zero",
-    modulo: (a, b) => b >= 0 ? a % b : a-b*Math.floor(a/b)
+function abstraction() {
+	const additiveIdentity = 0;
+	const multiplicativeIdentity = 1;
+  return operations = {
+    add: (a, b, c) => (a + b + c),
+    subtract: (a, b, c) => (a - b - c),
+	multiply: (a, b, c) => ((a * b ) * c),
+    divide: (a, b, c) => b !== 0 ? (a / b) * c: "Division by zero",
+    modulo: (a, b, c) => b >= 0 ? a%b : a-b*Math.floor(a/b),
+	three: (a, b ,c ) => 3 + c,
+	additiveIdentity,
+	multiplicativeIdentity //I transfer these bad boys over in the object so I can set c, and show how they don't affect calculations, but also don't break them
 	};
 }
+
+console.log(name); //Variable changes in functions do not change variables in global scope...
